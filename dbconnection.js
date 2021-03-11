@@ -1,5 +1,11 @@
 const { Sequelize } = require('sequelize');
 const { Logging } = require('@google-cloud/logging');
+const PropertiesReader = require('properties-reader');
+const property = PropertiesReader('./app.properties');
+
+getProperty = (prop) => {return property.get(prop);}
+console.log(getProperty('gcp.project.id'));
+console.log(getProperty)
 
 async function connectDB() {
   const sequelize = new Sequelize('testdb', 'postgres', '1234abcd', {
@@ -60,7 +66,7 @@ async function connectDB() {
 
 
 
-    app.listen(8000, function (err, address) {
+    app.listen(8009, function (err, address) {
       if (err) {
         console.error(err)
         process.exit(1)
