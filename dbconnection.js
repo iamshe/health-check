@@ -4,18 +4,16 @@ const PropertiesReader = require('properties-reader');
 const property = PropertiesReader('./app.properties');
 
 getProperty = (prop) => {return property.get(prop);}
-console.log(getProperty('gcp.project.id'));
-console.log(getProperty)
 
 async function connectDB() {
-  const sequelize = new Sequelize('testdb', 'postgres', '1234abcd', {
-    host: 'localhost',
+  const sequelize = new Sequelize(getProperty('db.user'), 'postgres', getProperty('db.password'), {
+    host: getProperty('host'),
     dialect: 'postgres'
   });
 
   try {
 
-    const logging = new Logging('citric-scope-272114');
+    const logging = new Logging(getProperty('gcp.project.id'));
     console.log("Connected to cloud");
 
     var log = logging.log('log_file');
@@ -66,7 +64,7 @@ async function connectDB() {
 
 
 
-    app.listen(8009, function (err, address) {
+    app.listen(getProperty('server.port'), function (err, address) {
       if (err) {
         console.error(err)
         process.exit(1)
