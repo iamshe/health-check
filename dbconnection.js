@@ -25,38 +25,33 @@ async function connectDB() {
     });
 
     await sequelize.sync({ force: true });
+
     console.log("connected to DB");
 
     const [healthLogEntries] = await gcpconnection.readLogs();
-
-    healthLogEntries.forEach(entry => {
-      const metadata = entry.metadata;
-      if (metadata[metadata.payload] = "Hello, world !") {
-        health_Logs_info.create({
-          id: metadata.insertId.replace("..........", ""),
-          log_name: metadata.logName.replace("projects/citric-scope-272114/logs/", ""),
-          description: metadata[metadata.payload],
-          severity: metadata.severity
-        });
-      }
-    });
-
     const fastify = require('fastify')({
       logger: true
     })
     const app = fastify;
+    app.post('/logs', (req, res) => {
+      healthLogEntries.forEach(entry => {
+        const metadata = entry.metadata;
+        if (metadata[metadata.payload] = "Hello, world !") {
+          health_Logs_info.create({
+            id: metadata.insertId.replace("..........", ""),
+            log_name: metadata.logName.replace("projects/citric-scope-272114/logs/", ""),
+            description: metadata[metadata.payload],
+            severity: metadata.severity
+          }).then(data => res.send(data));
+        }
+      })
+    });
+
     app.get('/logs', (req, res) => {
       health_Logs_info.findAll().then(log => res.send(log));
     });
 
-    // app.post("/data", (req, reply) =>
-    //   health_Logs_info.create({
-    //     id: metadata.insertId,
-    //     log_name: metadata.logName,
-    //     description: metadata[metadata.payload],
-    //     severity: metadata.severity
-    //   }));
-    
+
     app.listen(getProperty('server.port'), function (err, address) {
       if (err) {
         console.error(err)
