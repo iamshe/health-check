@@ -19,30 +19,30 @@ async function quickstart(
 
   const entry = log.entry(metadata, text);
 
-
+  writeLog();
   async function writeLog() {
     await log.write(entry);
     // console.log('Logged',entry);
   }
-  writeLog(log);
 
+  readLogs();
   async function readLogs() {
     var [entries] = await log.getEntries();
     entries.forEach(entry => {
       const metadata = entry.metadata;
       // console.log('Logs:', metadata[metadata.payload]);
       if (metadata[metadata.payload] = "Hello, world !") {
-        console.log(metadata.insertId);
+        
 
       }
     });
 
-  readLogs(log);
+    
 
     return log;
   }
 }
 
-module.exports = { quickstart };
+module.exports = quickstart('citric-scope-272114', 'log_file');
 
 

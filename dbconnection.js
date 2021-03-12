@@ -3,7 +3,7 @@ const { Logging } = require('@google-cloud/logging');
 const PropertiesReader = require('properties-reader');
 const property = PropertiesReader('./app.properties');
 
-getProperty = (prop) => {return property.get(prop);}
+getProperty = (prop) => { return property.get(prop); }
 
 async function connectDB() {
   const sequelize = new Sequelize(getProperty('db.user'), 'postgres', getProperty('db.password'), {
@@ -15,8 +15,8 @@ async function connectDB() {
 
     const logging = new Logging(getProperty('gcp.project.id'));
     console.log("Connected to cloud");
-
     var log = logging.log('log_file');
+
     await sequelize.authenticate();
     const Log_info = sequelize.define("log_info", {
       id: {
@@ -29,7 +29,7 @@ async function connectDB() {
     });
 
     await sequelize.sync();
-    console.log("connected to DB")
+    console.log("connected to DB");
 
     // var [entries] = await log.getEntries();
     // entries.forEach(entry => {
@@ -49,10 +49,9 @@ async function connectDB() {
       logger: true
     })
     const app = fastify;
-    app.get("/data", (req, reply) =>
-      Log_info.findAll().then((data) => reply.send(data))
-
-    );
+    app.get('/notes', (req, res) => {
+      Log_info.findAll().then(data => res.send(data));
+    });
 
     // app.post("/data", (req, reply) =>
     //   Log_info.create({
