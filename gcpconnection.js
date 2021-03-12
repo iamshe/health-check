@@ -2,17 +2,19 @@ const { Logging } = require('@google-cloud/logging');
 
 async function connectGCP(
   projectId = 'citric-scope-272114',
-  logName = 'log_file') {
+  logName = 'health-check-log') {
 
   const logging = new Logging({ projectId });
 
   var log = logging.log(logName);
   // console.log('Logs:',log); 
 
-  //writeLog(log);
+  //invoking method to write logs
+  writeLog(log);
 
+  //invoking method to read logs
   readLogs(log);
-
+  return log;
 }
 async function writeLog(log) {
   const text = 'Hello World!';
@@ -36,6 +38,8 @@ async function readLogs(log) {
   return [entries];
 }
 
-module.exports = connectGCP('citric-scope-272114', 'log_file');
+module.exports = { connectGCP, writeLog, readLogs }
+
+//connectGCP('citric-scope-272114', 'log_file');
 
 
