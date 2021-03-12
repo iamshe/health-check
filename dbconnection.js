@@ -3,7 +3,7 @@ const { Logging } = require('@google-cloud/logging');
 const PropertiesReader = require('properties-reader');
 const property = PropertiesReader('./app.properties');
 
-getProperty = (prop) => { return property.get(prop); }
+getProperty = (prop) => {return property.get(prop);}
 
 async function connectDB() {
   const sequelize = new Sequelize(getProperty('db.user'), 'postgres', getProperty('db.password'), {
