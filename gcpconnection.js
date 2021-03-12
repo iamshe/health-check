@@ -32,12 +32,11 @@ async function quickstart(
       const metadata = entry.metadata;
       // console.log('Logs:', metadata[metadata.payload]);
       if (metadata[metadata.payload] = "Hello, world !") {
-        
+
 
       }
     });
 
-    
 
     return log;
   }
