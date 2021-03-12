@@ -8,18 +8,15 @@ const property = PropertiesReader('./app.properties');
 
 getProperty = (prop) => {return property.get(prop);}
 
-var gcpconnection = require('./gcpconnection')
-gcpconnection.connectGCP(getProperty('gcp.project.id'), getProperty('gcp_log_file'))
+// var gcpconnection = require('./gcpconnection')
+// gcpconnection.connectGCP(getProperty('gcp.project.id'), getProperty('gcp_log_file'))
 
-// var dbconnection = require('./dbconnection')
-//  dbconnection;
 
-// var cron = require('node-cron');
-
-// cron.schedule('*/1 * * * *', () => {
-//     var dbconnection = require('./dbconnection')
-//     dbconnection;
-// });
+var cron = require('node-cron');
+cron.schedule('*/1 * * * *', () => {
+    var dbconnection = require('./dbconnection')
+    dbconnection;
+});
 
 
 
