@@ -49,7 +49,7 @@ async function connectDB() {
       logger: true
     })
     const app = fastify;
-    app.get('/notes', (req, res) => {
+    app.get('/data', (req, res) => {
       Log_info.findAll().then(data => res.send(data));
     });
 
