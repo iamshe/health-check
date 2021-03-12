@@ -3,18 +3,20 @@ const fastify = require('fastify')({
 })
 const app = fastify;
 
-// var gcpconnection = require('./gcpconnection')
-// app.gcpconnection
+const PropertiesReader = require('properties-reader');
+const property = PropertiesReader('./app.properties');
 
-var dbconnection = require('./dbconnection')
- dbconnection;
+getProperty = (prop) => {return property.get(prop);}
+
+// var gcpconnection = require('./gcpconnection')
+// gcpconnection.connectGCP(getProperty('gcp.project.id'), getProperty('gcp_log_file'))
+
 
 var cron = require('node-cron');
-
-// cron.schedule('*/1 * * * *', () => {
-//     var dbconnection = require('./dbconnection')
-//     app.dbconnection;
-// });
+cron.schedule('*/1 * * * *', () => {
+    var dbconnection = require('./dbconnection')
+    dbconnection;
+});
 
 
 
